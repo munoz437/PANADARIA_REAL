@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pedidos</title>
+  <!-- boostrap -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+  
+  <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
+        <style>
+    body {
+      background: #000000;  /* fallback for old browsers */
+background: -webkit-linear-gradient(to right, #434343, #000000);  /* Chrome 10-25, Safari 5.1-6 */
+background: linear-gradient(to right, #434343, #000000); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+    }
+
+    
+
+   
+  </style>
+    </head>
+       <body background="./Imagenes/8.jpg">
+        <br>
+        <center><h1>VENTAS-CLIENTE</h1></center>
+        <div class="d-flex">
+            <div class="col-sm-5"><!--ENCABEZADO DE COMPRAS-->
+                <div class="card">
+                    <form action="agregar_ventas.htm"  method="post">
+                        <div class="card-body">
+                            <div class="form-group d-flex">
+                                <center><label><h3><b>DATOS DE VENTA</b></h3></label></center>
+                                <label>Id Venta</label>
+                                <div class="col-sm-3">
+                                    <input type="number" class="form-control" id="txt_id" placeholder="ID" name="id_venta" value="${datos_id}"  readonly="">
+                                </div>
+                                <label>No. Factura</label>
+                                <div class="col-sm-3">                                            
+                                    <input type="number" class="form-control" value="${datos_No_factura+1}" id="txt_no_factura" name="No_factura" placeholder="No. Factura" required readonly="">
+                                </div>        
+                            </div>
+                            <div class="form-group d-flex">
+                                        <div class="col-sm-4">
+                                                <label>Cliente</label>
+                                                <!--<a href="Clientes.jsp" class="btn btn-outline-info">+</a>-->
+                                                <jsp:useBean id="cc" class="Controller.Controlador" scope="page"></jsp:useBean>
+                                            
+                                            <select id="drop_cliente" class="form-control" name="id_cliente" required="">
+                                                <option value="${datos_c}"></option>
+                                            
+                                                <option value=""> </option>
+                                                
+                                            </select>
+                                        </div>
+                                        <div class="col-sm-4">
+                                                <label>Empleado</label>
+                                                <!--<a href="Empleados.jsp" class="btn btn-outline-info">+</a>-->
+                                                <jsp:useBean id="cn" class="Controller.Controlador" scope="page"></jsp:useBean>
+                                            
+                                            <select id="drop_empleado" class="form-control" name="id_empleado" required="">
+                                                <option value="${datos_ide}"></option>
+                                            
+                                                <option value=""></option>
+                                            
+                                            </select>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <label>Fecha Factura</label>
+                                            <input type="text" class="form-control" id="txt_fecha_factura"
+                                                   name="fecha_factura" placeholder="Fecha de Factura" value="${datos_Ff}" required="">
+                                        </div>                                  
+                            </div>
+                                    <div class="form-group d-flex">
+                                        <div class="col-sm-3">
+                                            <label>Serie</label>
+                                            <input type="text" class="form-control"id="txt_serie" value="${datos_s}"
+                                                   name="serie" placeholder="Serie" required="">
+                                        </div>                         
+                                        <div class="col-sm-5">
+                                        <label>Fecha Ingreso</label>
+                                            <input type="text" class="form-control" name="Fi" placeholder="Fecha de Ingreso" 
+                                                   id="hora_local" values="${datos_fi}" required="" readonly="">
+                                        </div>
+                                    </div>
+                                    <div class="form-group d-flex">
+                                        <div class="col-sm-4 d-flex">
+                                            <input type="submit" class="btn btn-outline-info" id="btn_agregar" 
+                                                   name="btn_agregar" value="Agregar" onclick="habilitar()">
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <!--<input type="reset" class="btn btn-outline-primary" id="" name="" value="Limpiar" onclick="habilitar()">-->
+                                            <a href="limpiar_encabezado_ventas.htm" class="btn btn-outline-primary">Limpiar</a>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <a href="salir_ventas_cliente.htm?id=0" class="btn btn-outline-dark" >Regresar</a>
+                                        </div>
+                                    </div>
+                        </div>    
+                                    <script type="text/javascript">
+                                                var dt = new Date();
+                                                //new Date($.now());
+                                                var m = dt.getMonth() + 1;
+                                                var mes = (m < 10) ? '0' + m : m;
+                                                var time = dt.getHours() + ":" + dt.getMinutes() + ":" + dt.getSeconds();
+                                                var fecha = dt.getFullYear()+"-" + mes +"-"+dt.getDate();
+                                                var tiempo = dt.getFullYear()+"-" + mes +"-"+dt.getDate()+" "+
+                                                        dt.getHours()+":"+ dt.getMinutes()+":"+dt.getSeconds();
+                                                $("#hora_local" ).val(tiempo);  
+                                                $("#txt_fecha_factura" ).val(fecha);  
+                                        </script>
+                    </form>
+                                 
+                     <!--DETALLE DE VENTAS-->                              
+                    <form action="detalle_ventas.htm?id=${datos_id}&id2=${datos_id_produc}" method="post" id="form_detalle_venta">
+                        <div class="card-body">
+                            <div class="form-group d-flex">
+                                <div class="col-sm-4">
+                                    
+                                    <center><label><h3><b>DATOS DE PRODUCTO</b></h3></label></center>
+                                    
+                                </div>
+                                <div class="form-group d-flex"> 
+                                    <label>Id Venta</label>
+                                    <div class="col-sm-3">
+                                        <input type="number" name="id_venta" value="${datos_id}" class="form-control" 
+                                               placeholder="ID" readonly="readonly" required="">
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <label>Id Producto</label>
+                                    </div>                                    
+                                    <div class="d-flex">
+                                        <input type="number" name="id_producto" value="${datos_id_produc}" class="form-control" placeholder="Id Producto" readonly="" required="">
+                                    </div>
+                                </div>  
+                            </div>
+                                <div class="form-group d-flex">
+                                    <div class="col-sm-4">
+                                        <label>Producto</label>
+                                        <input type="text" name="txt_nombre_producto" value="${datos_produc}" class="form-control" placeholder="Producto" readonly="">
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <label>Precio Unitario</label>
+                                        <input type="number" name="precio_unitario" value="${datos_precio_v}" class="form-control"
+                                               placeholder="$/0.00" readonly="" required="">
+                                    </div>
+                                </div>
+                                    <script>
+                                        function restar (valor) {
+                                            var total = 0;	
+                                            total = ${datos_exis};
+                                            valor = $("#cant").val()
+                                            // Aquí valido si hay un valor previo, si no hay datos, le pongo un cero "0".
+                                            //total = (total == null || total == undefined || total == "") ? 0 : total;
+                                            total = (total == null || total == undefined || total == "") ? 0 : total;
+                                            /* Esta es la suma. */
+                                            if(total>valor){
+                                                total = (parseInt(total) - parseInt(valor));
+                                                /*Asigna el total*/
+                                                $("#spTotal").val(total);
+                                            }
+                                            else{
+                                                alert("Error,se ha sobrepasado la cantidad disponible");
+                                                $("#spTotal").val("");
+                                            }
+                                        }
+                                    </script>
+                                <div class="form-group d-flex">
+                                    <div class="col-sm-4">
+                                        <label>Existencia</label>
+                                        <input type="number" name="cantidad_disponible" value="${datos_exis}" id="cd" 
+                                               class="form-control" placeholder="Cantidad" readonly="">
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <label>No. Unidades</label>
+                                        <input type="number" name="cantidad" id="cant" class="form-control" placeholder="Stock" required="" onchange="restar(this.value)">
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <!--<label>Total de Unidades</label>-->
+                                        <input type="number" hidden="" name="Existencia" id="spTotal" class="form-control" placeholder="Total" readonly="" required="">
+                                    </div>
+                                </div>
+                            
+                                    <script>
+                                        function habilitar(){
+                                        document.("#form_detalle").$("#btn_agregar").disabled = true;
+                                        }
+                                    </script>
+                            <div class="form-group d-flex">
+                                <div class="col-sm-4 d-flex">
+                                    <input type="submit" class="btn btn-outline-info" id="btn_agregar" name="btn_agregar_producto" value="Agregar">
+                                </div>
+                                <div class="col-sm-4">
+                                    <!--<input type="reset" class="btn btn-outline-primary" id="" name="" value="Limpiar" >-->
+                                    <a href="buscar_productos.htm?id=0" class="btn btn-outline-primary">Limpiar</a>
+                                </div>
+                                <div class="col-sm-4">
+                                    <a href="salir_ventas_cliente.htm?id=0" class="btn btn-outline-dark" >Regresar</a>
+                                </div>
+                            </div>
+                        </div>
+                    </form>                                        
+                                        
+                    
+                </div>
+                                    
+            </div>
+                                        
+                                        
+            <!--TABLA DE PRODUCTOS-->
+            <div class="col-sm-7">
+                <div class="card">
+                    <form  method="post">    
+                        <div class="card-body">
+                            <div class="d-flex col-sm-5 ml-auto form-group">
+                                <!--<div class="col-sm-5 d-flex">-->
+                                <!--</div>-->
+                                <div class="col-sm-6">
+                                    <!--<input type="button" name="btn_buscar" value="buscar" class="btn btn-outline-success form-control">-->
+                                    <a href="ventas_cliente.htm?id=${datos_id}" class="btn btn-outline-success form-control">Ver Ventas</a>
+                                    <br>
+                                </div>
+                                
+                            </div>
+                            <center><h3><b>PRODUCTOS</b></h3></center>
+                            <table class="table table-responsive table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Producto</th>
+                                        <th>Descripcion</th>
+                                        <th>imagen</th>
+                                        <th>Precio</th>
+                                        <th>Existencia</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tbl_productos" >
+                                          <jsp:useBean id="cp" class="Controller.Controlador" scope="page"></jsp:useBean>
+                                          <% 
+                                              ResultSet rp = cp.mostrar_combo_productos();
+                                              while(rp.next()){
+                                          %>
+                                        <tr>
+                                            <td><%=rp.getString("idProducto")%></td>
+                                            <td><%=rp.getString("Producto")%></td>
+                                            <td><%=rp.getString("Descripcion")%></td>
+                                            <td><%=rp.getString("imagen")%></td>
+                                            <td><%=rp.getString("Precio_venta")%></td>
+                                            <td><%=rp.getString("Existencia")%></td>
+                                            <td>
+                                                <a href="buscar_productos.htm?id=<%=rp.getString("idProducto")%>" class=" btn btn-outline-warning btn-block btn-sm" >Agregar a Carrito</a>
+                                            </td>
+                                        </tr>
+                                            <%
+                                            }
+                                            %>
+                                </tbody>
+                            </table>
+
+                        </div>
+                                <div class="card-footer">
+                                   <!--<input type="submit" class="btn btn-success" id="btn_agregar" name="btn_agregar" value="Generar Compra">-->
+                                    <!--<a href="salir.htm?id=0" class="btn btn-danger">Cancelar</a>-->
+                                    <a href="salir_ventas_cliente.htm?id=0" class="btn btn-dark" >Regresar</a>
+                                </div>
+                    </form>
+                </div>
+                
+            </div>
+        </div>
+        
+    </body>
+</html>

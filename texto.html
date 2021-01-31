@@ -1,0 +1,86 @@
+<div class="container-fluid">
+
+    <div class="row justify-content-center text-white">
+      
+
+      <form id="pedido" name="pedido" action="nuevo.php" method="POST" class="form-group col-md-6 ">
+        
+          <h2 class="text-center">Pedidos</h2>
+        
+        <div class="form-group">
+          <!-- <input class="form-control text-light bg-dark" id="id" type="number" placeholder="Id del Pedido" readonly>
+         -->
+         </div>
+      
+        <div class="row">
+          <div class="form-group col-md-6">
+            <label class="text-white">Nombres Del Cliente</label>
+            <input class="form-control text-light bg-dark" id="nombre" name="nombre" type="text" placeholder="Nombres" required>
+          </div>
+
+          <div class="form-group col-md-6">
+            <label class="text-white">Apellidos Del Cliente</label>
+            <input class="form-control text-light bg-dark" id="apellido" name="apellido" type="text" placeholder="Apellidos" required>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="text-white">Fecha y Hora de Pedido</label>
+          
+         <!-- <input class="form-control text-light bg-dark" id="fecha_pedido" type="datetime-local" name="fecha_pedido" id="fecha_pedido"  required> -->
+        <?php
+        date_default_timezone_set("America/Guatemala");
+        echo "<input class='form-control text-light bg-dark' id='fecha_pedido' type='text' name='fecha_pedido' id='fecha_pedido' readonly value='".date("Y-m-d G:i:s")."'>"; ?>
+         
+        </div>
+        <div class="form-group">
+          <label class="text-white">Fecha y Hora de Entrega</label>
+          <input class="form-control text-light bg-dark" id="fecha_entrega" type="datetime-local" name="fecha_entrega" id="fecha_entrega" required>
+        </div>
+        <div class="form-group">
+          <label class="text-white">Tipo de Pastel</label>
+          <select class="form-control text-light bg-dark" id="tipo_pastel" name="tipo_pastel" aria-placeholder="Tipo Pastel" required>
+            <option></option>
+            <?php while($fila = $resultado->fetch_assoc()) { ?>  
+              <option value="<?php echo $fila['ID']; ?>"><?php echo $fila['Nombre']; ?></option>
+            <?php } ?>
+          </select>
+        </div>  
+        
+
+
+        
+
+        <div class="form-group">
+          <label class="text-white">Personalizado</label>
+          <textarea class="form-control text-light bg-dark" name="personalizar" id="personalizar" cols="30" rows="5" required>
+  
+          </textarea>
+        </div>
+
+        <div class="row">
+          <div class="form-group col-md-6">
+            <button type="submit" class="btn btn-success btn-block ">
+              <i class='bx bxs-send bx-sm'></i>
+            </button>
+          </div>
+
+          <div class="form-group col-md-6">
+            <button type="reset" class="btn btn-danger btn-block ">
+              
+            <i class='bx bxs-x-square bx-sm'></i>
+            </button>
+          </div>
+        </div>
+        
+        
+
+
+
+      </form>
+    </div>
+
+
+
+
+  </div>
